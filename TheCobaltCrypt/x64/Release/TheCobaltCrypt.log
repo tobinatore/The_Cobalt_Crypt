@@ -1,0 +1,114 @@
+﻿Der Buildvorgang wurde am 05.08.2017 18:14:38 gestartet.
+     1>Projekt "C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\TheCobaltCrypt.vcxproj" auf Knoten "2", Build Ziel(e).
+     1>ClCompile:
+         D:\AlleProgramme\Visual Studio\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\sfml\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Release\\" /Fd"x64\Release\vc140.pdb" /Gd /TP /errorReport:prompt animation.cpp dungeon_generator.cpp enemy.cpp main.cpp player.cpp powerup.cpp randomOperations.cpp
+         animation.cpp
+     1>animation.cpp(11): warning C4244: "=": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>animation.cpp(12): warning C4244: "=": Konvertierung von "float" in "int", möglicher Datenverlust
+         dungeon_generator.cpp
+     1>dungeon_generator.cpp(155): warning C4267: "Argument": Konvertierung von "size_t" nach "int", Datenverlust möglich
+     1>dungeon_generator.cpp(380): warning C4267: "Argument": Konvertierung von "size_t" nach "int", Datenverlust möglich
+         enemy.cpp
+         main.cpp
+     1>main.cpp(59): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(70): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(81): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(92): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(97): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(229): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(232): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(262): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(263): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(286): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(287): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(293): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(294): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(316): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(317): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(323): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(324): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(346): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(347): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(354): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(355): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(377): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(378): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(404): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(405): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(406): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(407): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(412): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(413): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(414): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(415): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(420): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(421): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(422): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(423): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(428): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(429): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(430): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(431): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(442): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(482): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>D:\AlleProgramme\Visual Studio\VC\include\xmemory0(657): error C2280: "Enemy::Enemy(const Enemy &)" : Es wurde versucht, auf eine gelöschte Funktion zu verweisen
+         c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\enemy.h(58): note: Compiler hat hier "Enemy::Enemy" generiert
+         D:\AlleProgramme\Visual Studio\VC\include\xmemory0(775): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::allocator<_Ty>::construct<_Objty,Enemy&>(_Objty *,Enemy &)".
+                 with
+                 [
+                     _Ty=Enemy,
+                     _Objty=Enemy
+                 ]
+         D:\AlleProgramme\Visual Studio\VC\include\xmemory0(775): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::allocator<_Ty>::construct<_Objty,Enemy&>(_Objty *,Enemy &)".
+                 with
+                 [
+                     _Ty=Enemy,
+                     _Objty=Enemy
+                 ]
+         D:\AlleProgramme\Visual Studio\VC\include\xmemory0(920): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::allocator_traits<_Alloc>::construct<_Ty,Enemy&>(std::allocator<_Ty> &,_Objty *,Enemy &)".
+                 with
+                 [
+                     _Alloc=std::allocator<Enemy>,
+                     _Ty=Enemy,
+                     _Objty=Enemy
+                 ]
+         D:\AlleProgramme\Visual Studio\VC\include\xmemory0(920): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::allocator_traits<_Alloc>::construct<_Ty,Enemy&>(std::allocator<_Ty> &,_Objty *,Enemy &)".
+                 with
+                 [
+                     _Alloc=std::allocator<Enemy>,
+                     _Ty=Enemy,
+                     _Objty=Enemy
+                 ]
+         D:\AlleProgramme\Visual Studio\VC\include\vector(1282): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::_Wrap_alloc<std::allocator<_Ty>>::construct<Enemy,Enemy&>(_Ty *,Enemy &)".
+                 with
+                 [
+                     _Ty=Enemy
+                 ]
+         D:\AlleProgramme\Visual Studio\VC\include\vector(1282): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::_Wrap_alloc<std::allocator<_Ty>>::construct<Enemy,Enemy&>(_Ty *,Enemy &)".
+                 with
+                 [
+                     _Ty=Enemy
+                 ]
+         D:\AlleProgramme\Visual Studio\VC\include\vector(1274): note: Bei der Kompilierung der Klassen-template der "void std::vector<Enemy,std::allocator<_Ty>>::push_back(const Enemy &)"-Memberfunktion
+                 with
+                 [
+                     _Ty=Enemy
+                 ]
+         main.cpp(212): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::vector<Enemy,std::allocator<_Ty>>::push_back(const Enemy &)".
+                 with
+                 [
+                     _Ty=Enemy
+                 ]
+         main.cpp(16): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Klassen-template "std::vector<Enemy,std::allocator<_Ty>>".
+                 with
+                 [
+                     _Ty=Enemy
+                 ]
+         player.cpp
+         powerup.cpp
+         randomOperations.cpp
+     1>Die Erstellung des Projekts "C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\TheCobaltCrypt.vcxproj" ist abgeschlossen, Build Ziel(e) -- FEHLER.
+
+Fehler beim Buildvorgang.
+
+Verstrichene Zeit 00:00:02.09

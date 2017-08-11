@@ -1,0 +1,58 @@
+﻿Der Buildvorgang wurde am 11.08.2017 21:36:23 gestartet.
+     1>Projekt "C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\TheCobaltCrypt.vcxproj" auf Knoten "2", Build Ziel(e).
+     1>ClCompile:
+         D:\AlleProgramme\Visual Studio\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\sfml\include" /ZI /nologo /W3 /WX- /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(252): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(253): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(254): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(255): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(256): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(277): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(288): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(299): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(310): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(321): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(326): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(540): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(553): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(628): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(629): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(630): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(631): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(632): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(633): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(634): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(635): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(640): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(654): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(655): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(656): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(663): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(664): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(665): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(666): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(673): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(674): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(675): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(676): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(683): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(684): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(685): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(686): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(743): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\main.cpp(756): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+       Link:
+         D:\AlleProgramme\Visual Studio\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\x64\Debug\TheCobaltCrypt.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\sfml\lib" "sfml-system-d.lib" "sfml-graphics-d.lib" "sfml-audio-d.lib" "sfml-network-d.lib" "sfml-window-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\x64\Debug\TheCobaltCrypt.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\x64\Debug\TheCobaltCrypt.lib" /MACHINE:X64 x64\Debug\animation.obj
+         x64\Debug\dungeon_generator.obj
+         x64\Debug\enemy.obj
+         x64\Debug\main.obj
+         x64\Debug\player.obj
+         x64\Debug\powerup.obj
+         x64\Debug\randomOperations.obj
+         TheCobaltCrypt.vcxproj -> C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\x64\Debug\TheCobaltCrypt.exe
+     1>Die Erstellung von Projekt "C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\TheCobaltCrypt.vcxproj" ist abgeschlossen (Build Ziel(e)).
+
+Der Buildvorgang wurde erfolgreich ausgeführt.
+
+Verstrichene Zeit 00:00:01.27

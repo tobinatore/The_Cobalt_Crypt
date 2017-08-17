@@ -404,13 +404,14 @@ int main() {
 	
 
 	sf::Texture exitTile;													//Textur des Ausgangs
-	exitTile.loadFromFile("exit.png");
+	exitTile.loadFromFile("exitTile.png");
 
 	sf::Texture spawnTile;													//Textur des Spawnpunktes
 	spawnTile.loadFromFile("spawn.png");
 
 	trapdoor.first.setTexture(&exitTile);									//Textur des Ausganges verwenden		
-	
+	trapdoor.first.setSize(TEXTURE_SIZE);
+
 	spawnpoint.setTexture(&spawnTile);										//Textur des Spawnpunktes verwenden
 
 
@@ -506,7 +507,7 @@ int main() {
 				}
 				if (evnt.key.code == sf::Keyboard::Subtract)
 				{
-					player.takeDamage(100);
+					player.takeDamage(10);
 				}
 			}
 				
@@ -605,12 +606,22 @@ int main() {
 			groundTiles[map[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
 			groundTiles[map[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
 			groundTiles[map[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
+			groundTiles[map[(int)player.getPosition().x + 16][(int)player.getPosition().y -16]].second = true;			//nebenbei Boden-...
+			groundTiles[map[(int)player.getPosition().x + 16][(int)player.getPosition().y +16]].second = true;
+			groundTiles[map[(int)player.getPosition().x - 16][(int)player.getPosition().y -16]].second = true;
+			groundTiles[map[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16]].second = true;
+
 
 			wallTiles[mapWalls[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;		//...und Wandfelder aufdecken und sichtbar machen
 			wallTiles[mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
 			wallTiles[mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
 			wallTiles[mapWalls[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
 			wallTiles[mapWalls[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
+			wallTiles[mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y - 16]].second = true;			
+			wallTiles[mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16]].second = true;
+			wallTiles[mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16]].second = true;
+			wallTiles[mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16]].second = true;
+
 
 			decorationTiles[mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;
 			decorationTiles[mapDecorations[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
@@ -637,7 +648,8 @@ int main() {
 				trapdoor.second = true;
 			}
 				
-			if (d.getTile(player.getPosition().x / 16, (player.getPosition().y) / 16) == '5') {
+			if (d.getTile(player.getPosition().x / 16, (player.getPosition().y) / 16) == '5' 
+				&& healthTiles[mapPickups[(int)player.getPosition().x][(int)player.getPosition().y]].first.getTexture() != &groundTextures[4]) {
 				player.pickup();
 				healthTiles[mapPickups[(int)player.getPosition().x][(int)player.getPosition().y]].first.setTexture(&groundTextures[4]);
 			}
@@ -712,7 +724,7 @@ int main() {
 					if (!enemies[i].dead) {
 						enemies[i].attacks = true;
 						attackTimer++;
-						if (attackTimer == 59) {
+						if (attackTimer == 29) {
 							player.takeDamage(enemies[i].dealDamage(enemies[i].strength));
 							attackTimer = 0;
 						}
@@ -738,7 +750,7 @@ int main() {
 			}
 		
 			healthContent.setScale(player.getHealth() * 1.5f / player.maxHealth, 1.5f);
-			//healthContent.setPosition((player.getHealth() * 1.5f / player.maxHealth) * (- 7.0f) + 11, 0.0f);
+			healthContent.setPosition(21 + ((player.getHealth() * 1.5f / player.maxHealth) * (-6.6667f) + 11), 16.5f);
 
 			if (d.getTile(player.getPosition().x / 16, (player.getPosition().y) / 16) == '7') { //Erreicht der Spieler den Ausgang
 

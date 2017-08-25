@@ -10,6 +10,7 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, 
 
 	this->health = baseHealth;
 	this->strength = baseStrength;
+	this->armor = maxArmor;
 
 	body.setSize(sf::Vector2f(19.0f, 32.0f));					//Spieler
 	body.setOrigin(9.5f, 20.0f);								//da sonst die Koordinaten des Spielers von der oberen linken Ecke gelesen werden würden,
@@ -23,15 +24,42 @@ int Player::getHealth() {
 	return health;
 }
 
-void Player::pickup() {
-	health += 20;
+int Player::getArmor()
+{
+	return armor;
+}
 
-	if (health > maxHealth)
-		health = maxHealth;
+void Player::pickup(int item) {
+	
+	switch (item)
+	{
+	case 1:
+		health += 20;
+
+		if (health > maxHealth)
+			health = maxHealth;
+		break;
+	case 2:
+		armor += 5;
+
+		if (armor > maxArmor)
+			armor = maxArmor;
+		break;
+
+	default:
+		break;
+	}
+	
 }
 
 void Player::takeDamage(int damageTaken) {
-	health -= damageTaken;
+	if(armor >= damageTaken)
+		armor-= damageTaken;
+	else {
+		damageTaken -= armor;
+		armor = 0;
+		health -= damageTaken;
+	}
 }
 
 int Player::dealDamage() {

@@ -1,114 +1,73 @@
-﻿Der Buildvorgang wurde am 05.08.2017 18:14:38 gestartet.
+﻿Der Buildvorgang wurde am 21.08.2017 12:20:56 gestartet.
      1>Projekt "C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\TheCobaltCrypt.vcxproj" auf Knoten "2", Build Ziel(e).
      1>ClCompile:
-         D:\AlleProgramme\Visual Studio\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\sfml\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Release\\" /Fd"x64\Release\vc140.pdb" /Gd /TP /errorReport:prompt animation.cpp dungeon_generator.cpp enemy.cpp main.cpp player.cpp powerup.cpp randomOperations.cpp
+         D:\AlleProgramme\Visual Studio\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\sfml\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Release\\" /Fd"x64\Release\vc140.pdb" /Gd /TP /errorReport:prompt animation.cpp dungeon_generator.cpp enemy.cpp main.cpp player.cpp randomOperations.cpp
          animation.cpp
      1>animation.cpp(11): warning C4244: "=": Konvertierung von "float" in "int", möglicher Datenverlust
      1>animation.cpp(12): warning C4244: "=": Konvertierung von "float" in "int", möglicher Datenverlust
          dungeon_generator.cpp
-     1>dungeon_generator.cpp(155): warning C4267: "Argument": Konvertierung von "size_t" nach "int", Datenverlust möglich
-     1>dungeon_generator.cpp(380): warning C4267: "Argument": Konvertierung von "size_t" nach "int", Datenverlust möglich
+     1>dungeon_generator.cpp(185): warning C4267: "Argument": Konvertierung von "size_t" nach "int", Datenverlust möglich
+     1>dungeon_generator.cpp(410): warning C4267: "Argument": Konvertierung von "size_t" nach "int", Datenverlust möglich
          enemy.cpp
          main.cpp
-     1>main.cpp(59): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-     1>main.cpp(70): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-     1>main.cpp(81): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-     1>main.cpp(92): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-     1>main.cpp(97): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-     1>main.cpp(229): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-     1>main.cpp(232): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-     1>main.cpp(262): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(263): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(286): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(287): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(293): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(294): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(316): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(317): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(323): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(324): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(346): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(347): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(354): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(355): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(377): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(378): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(404): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(405): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(406): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(407): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(412): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(413): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(414): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(415): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(420): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(421): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(422): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(423): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(428): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(429): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(430): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(431): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(442): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
-     1>main.cpp(482): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
-     1>D:\AlleProgramme\Visual Studio\VC\include\xmemory0(657): error C2280: "Enemy::Enemy(const Enemy &)" : Es wurde versucht, auf eine gelöschte Funktion zu verweisen
-         c:\users\agando\documents\visual studio 2015\projects\thecobaltcrypt\thecobaltcrypt\enemy.h(58): note: Compiler hat hier "Enemy::Enemy" generiert
-         D:\AlleProgramme\Visual Studio\VC\include\xmemory0(775): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::allocator<_Ty>::construct<_Objty,Enemy&>(_Objty *,Enemy &)".
-                 with
-                 [
-                     _Ty=Enemy,
-                     _Objty=Enemy
-                 ]
-         D:\AlleProgramme\Visual Studio\VC\include\xmemory0(775): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::allocator<_Ty>::construct<_Objty,Enemy&>(_Objty *,Enemy &)".
-                 with
-                 [
-                     _Ty=Enemy,
-                     _Objty=Enemy
-                 ]
-         D:\AlleProgramme\Visual Studio\VC\include\xmemory0(920): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::allocator_traits<_Alloc>::construct<_Ty,Enemy&>(std::allocator<_Ty> &,_Objty *,Enemy &)".
-                 with
-                 [
-                     _Alloc=std::allocator<Enemy>,
-                     _Ty=Enemy,
-                     _Objty=Enemy
-                 ]
-         D:\AlleProgramme\Visual Studio\VC\include\xmemory0(920): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::allocator_traits<_Alloc>::construct<_Ty,Enemy&>(std::allocator<_Ty> &,_Objty *,Enemy &)".
-                 with
-                 [
-                     _Alloc=std::allocator<Enemy>,
-                     _Ty=Enemy,
-                     _Objty=Enemy
-                 ]
-         D:\AlleProgramme\Visual Studio\VC\include\vector(1282): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::_Wrap_alloc<std::allocator<_Ty>>::construct<Enemy,Enemy&>(_Ty *,Enemy &)".
-                 with
-                 [
-                     _Ty=Enemy
-                 ]
-         D:\AlleProgramme\Visual Studio\VC\include\vector(1282): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::_Wrap_alloc<std::allocator<_Ty>>::construct<Enemy,Enemy&>(_Ty *,Enemy &)".
-                 with
-                 [
-                     _Ty=Enemy
-                 ]
-         D:\AlleProgramme\Visual Studio\VC\include\vector(1274): note: Bei der Kompilierung der Klassen-template der "void std::vector<Enemy,std::allocator<_Ty>>::push_back(const Enemy &)"-Memberfunktion
-                 with
-                 [
-                     _Ty=Enemy
-                 ]
-         main.cpp(212): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Funktions-template "void std::vector<Enemy,std::allocator<_Ty>>::push_back(const Enemy &)".
-                 with
-                 [
-                     _Ty=Enemy
-                 ]
-         main.cpp(16): note: Siehe Verweis auf die Instanziierung der gerade kompilierten Klassen-template "std::vector<Enemy,std::allocator<_Ty>>".
-                 with
-                 [
-                     _Ty=Enemy
-                 ]
+     1>main.cpp(300): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(301): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(302): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(303): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(304): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(305): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(327): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(338): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(349): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(360): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(371): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(376): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(380): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(602): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(615): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(706): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(707): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(708): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(709): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(710): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(711): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(712): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(713): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(718): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(723): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(739): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(740): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(741): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(748): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(749): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(750): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(751): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(758): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(759): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(760): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(761): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(768): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(769): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(770): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(771): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(831): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(844): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
          player.cpp
-         powerup.cpp
          randomOperations.cpp
-     1>Die Erstellung des Projekts "C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\TheCobaltCrypt.vcxproj" ist abgeschlossen, Build Ziel(e) -- FEHLER.
+       Link:
+         D:\AlleProgramme\Visual Studio\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\x64\Release\TheCobaltCrypt.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\sfml\lib" "sfml-system.lib" "sfml-graphics.lib" "sfml-audio.lib" "sfml-network.lib" "sfml-window.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\x64\Release\TheCobaltCrypt.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\x64\Release\TheCobaltCrypt.lib" /MACHINE:X64 x64\Release\animation.obj
+         x64\Release\dungeon_generator.obj
+         x64\Release\enemy.obj
+         x64\Release\main.obj
+         x64\Release\player.obj
+         x64\Release\powerup.obj
+         x64\Release\randomOperations.obj
+         Code wird generiert.
+         All 580 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+         Codegenerierung ist abgeschlossen.
+         TheCobaltCrypt.vcxproj -> C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\x64\Release\TheCobaltCrypt.exe
+     1>Die Erstellung von Projekt "C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\TheCobaltCrypt.vcxproj" ist abgeschlossen (Build Ziel(e)).
 
-Fehler beim Buildvorgang.
+Der Buildvorgang wurde erfolgreich ausgeführt.
 
-Verstrichene Zeit 00:00:02.09
+Verstrichene Zeit 00:00:03.55

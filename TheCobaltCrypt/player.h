@@ -8,6 +8,7 @@ public:
 	int points;
 	bool attacks = false;
 	int maxHealth = 100;
+	int maxArmor = 100;
 
 public:
 	Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed,
@@ -15,7 +16,9 @@ public:
 
 	int getHealth();
 
-	void pickup();
+	int getArmor();
+
+	void pickup(int item);
 
 	void takeDamage(int damageTaken);
 
@@ -44,6 +47,7 @@ private:
 	float speed;
 	bool faceRight;
 	int health;
+	int armor;
 	int strength;
 	int timer = 10;
 	int deadnessTimer = 0;

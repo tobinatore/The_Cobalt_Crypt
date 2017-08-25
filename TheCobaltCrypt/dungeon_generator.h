@@ -23,7 +23,8 @@ public:
 		Decoration = '4',
 		HealthPickup = '5',
 		Spawn = '6',
-		Exit = '7'
+		Exit = '7',
+		ArmorPickup = '8'
 	};
 
 	enum Direction
@@ -39,8 +40,6 @@ public:
 	Dungeon(int width, int height);
 
 	void generate(int maxFeatures);
-
-	void print();
 	
 	char getTile(int x, int y) const;
 	 
@@ -50,9 +49,11 @@ public:
 
 	int countDecoTiles();
 
-	int countPickupTiles();
+	std::pair<int, int> countPickupTiles();
 
 	void clearDungeon(int width, int heigth);
+
+	void createBreaches();
 
 private:
 	void setTile(int x, int y, char tile);
@@ -68,6 +69,8 @@ private:
 	bool placeRect(const Rect& rect, char tile);
 
 	bool placeObject(char tile);
+
+	bool clustercheck(int x, int y, bool vertical);
 
 private:
 	int _width, _height;

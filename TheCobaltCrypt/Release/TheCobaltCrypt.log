@@ -1,0 +1,90 @@
+﻿Der Buildvorgang wurde am 21.08.2017 12:23:50 gestartet.
+     1>Projekt "C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\TheCobaltCrypt.vcxproj" auf Knoten "2", Build Ziel(e).
+     1>ClCompile:
+         D:\AlleProgramme\Visual Studio\VC\bin\CL.exe /c /I"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\sfml\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt animation.cpp dungeon_generator.cpp enemy.cpp main.cpp player.cpp powerup.cpp randomOperations.cpp
+         animation.cpp
+     1>animation.cpp(11): warning C4244: "=": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>animation.cpp(12): warning C4244: "=": Konvertierung von "float" in "int", möglicher Datenverlust
+         dungeon_generator.cpp
+     1>dungeon_generator.cpp(167): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+         enemy.cpp
+         main.cpp
+     1>main.cpp(95): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(102): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(109): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(115): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(121): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(175): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(182): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(189): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(202): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(209): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(300): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(301): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(302): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(303): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(304): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(305): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(327): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(338): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(349): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(360): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(371): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(376): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(380): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(602): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(607): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(615): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(706): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(707): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(708): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(709): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(710): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(711): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(712): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(713): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(718): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(723): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(733): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(739): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(740): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(741): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(748): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(749): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(750): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(751): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(758): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(759): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(760): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(761): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(768): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(769): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(770): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(771): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(812): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(831): warning C4244: "Argument": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>main.cpp(844): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>main.cpp(859): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(864): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(870): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(876): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(882): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(888): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>main.cpp(908): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+         player.cpp
+         powerup.cpp
+         randomOperations.cpp
+       Link:
+         D:\AlleProgramme\Visual Studio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\Release\TheCobaltCrypt.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\sfml\lib" "sfml-system.lib" "sfml-graphics.lib" "sfml-audio.lib" "sfml-network.lib" "sfml-window.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\Release\TheCobaltCrypt.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\Release\TheCobaltCrypt.lib" /MACHINE:X86 /SAFESEH Release\animation.obj
+         Release\dungeon_generator.obj
+         Release\enemy.obj
+         Release\main.obj
+         Release\player.obj
+         Release\powerup.obj
+         Release\randomOperations.obj
+     1>sfml-graphics.lib(sfml-graphics-2.dll) : fatal error LNK1112: Modul-Computertyp "x64" steht in Konflikt mit dem Zielcomputertyp "X86".
+     1>Die Erstellung des Projekts "C:\Users\AGANDO\Documents\Visual Studio 2015\Projects\TheCobaltCrypt\TheCobaltCrypt\TheCobaltCrypt.vcxproj" ist abgeschlossen, Build Ziel(e) -- FEHLER.
+
+Fehler beim Buildvorgang.
+
+Verstrichene Zeit 00:00:02.48

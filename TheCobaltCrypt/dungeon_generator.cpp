@@ -40,14 +40,16 @@ void Dungeon::generate(int maxFeatures)
 		return;
 	}
 
-	for (int i = 0; i < maxFeatures/2; i++)
+	for (int i = 0; i < maxFeatures*0.75; i++)
 	{
-		if (randOps.randomInt(8) == 1) {
+		if (randOps.randomInt(20) == 1) {			//5%ige Chance einen Heilungstrank zu platzieren
 			placeObject(HealthPickup);
+		}else if (randOps.randomInt(20) == 3) {		//5%ige Chance ein Rüstungsteil zu platzieren
+			placeObject(ArmorPickup);
 		}
 		else
 		{
-			placeObject(Decoration);
+			placeObject(Decoration);				//90%ige Chance ein Dekoteil zu platzieren
 		}
 		
 	}
@@ -59,18 +61,11 @@ void Dungeon::generate(int maxFeatures)
 		else if (tile == Floor || tile == Corridor)
 			tile = '1';			//Korridore und Räume bekommen die gleiche Textur
 	}
-}
 
-//void Dungeon::print()  //Ausgabe in der Konsole (Debug) 
-//{
-//	for (int y = 0; y < _height; ++y)
-//	{
-//		for (int x = 0; x < _width; ++x)
-//			std::cout << getTile(x, y);
-//
-//		std::cout << std::endl;
-//	}
-//}
+	createBreaches();
+
+
+}
 
 
 char Dungeon::getTile(int x, int y) const  //entsprechende Kachel zurückgeben
@@ -124,7 +119,7 @@ int Dungeon::countDecoTiles()		//Dekostücke zählen
 	{
 		for (int x = 0; x < _width; ++x)
 		{
-			if (getTile(x, y) == '1')
+			if (getTile(x, y) == '4')
 			{
 				deco++;
 			}
@@ -133,17 +128,21 @@ int Dungeon::countDecoTiles()		//Dekostücke zählen
 	return deco;
 }
 
-int Dungeon::countPickupTiles()
+std::pair<int,int> Dungeon::countPickupTiles()
 {
-	int pickup = 0;
+	std::pair<int, int> pickup = { 0,0 };
 
 	for (int y = 0; y < _height; ++y)
 	{
 		for (int x = 0; x < _width; ++x)
 		{
-			if (getTile(x, y) == '1')
+			if (getTile(x, y) == '5')
 			{
-				pickup++;
+				pickup.first++;
+			}
+			else if (getTile(x, y) == '8')
+			{
+				pickup.second++;
 			}
 		}
 	}
@@ -163,6 +162,26 @@ void Dungeon::clearDungeon(int width, int height) {		//Dungeon löschen
 	}
 }
 
+void Dungeon::createBreaches()
+{
+	for (int x = 0;  x< _width; x++)
+	{
+		for (int y = 0; y < _height; y++)
+		{
+			if (getTile(x, y) == getTile(x + 1, y) && getTile(x, y) == Wall && getTile(x+2,y) == Floor && getTile(x -1, y) == Floor  && clustercheck(x, y, false)) {
+				setTile(x, y, Floor);
+				setTile(x + 1, y, Floor);
+			}else if (getTile(x, y) == getTile(x, y + 1) && getTile(x, y) == Wall && getTile(x, y+2) == Floor && getTile(x, y-1) == Floor && clustercheck(x,y,true)) {
+				setTile(x, y, Floor);
+				setTile(x, y+1, Floor);
+			}
+			
+
+			
+		}
+	}
+}
+
 void Dungeon::setTile(int x, int y, char tile)		//Feld auf einen bestimmten Typ setzen
 {
 	_tiles[x + y * _width] = tile;
@@ -170,7 +189,7 @@ void Dungeon::setTile(int x, int y, char tile)		//Feld auf einen bestimmten Typ 
 
 bool Dungeon::createFeature()
 {
-	for (int i = 0; i < 1000; ++i)
+	for (int i = 0; i < 2000; ++i)
 	{
 		if (_exits.empty())
 			break;
@@ -241,8 +260,8 @@ bool Dungeon::createFeature(int x, int y, Direction dir)
 
 bool Dungeon::makeRoom(int x, int y, Direction dir, bool firstRoom ) //Raum generieren
 {
-	static const int minRoomSize = 3;	//minimale und maximale Raumgröße
-	static const int maxRoomSize = 8;
+	static const int minRoomSize = 5;	//minimale und maximale Raumgröße
+	static const int maxRoomSize = 10;
 
 	Rect room;
 	room.width = randOps.randomInt(minRoomSize, maxRoomSize);
@@ -292,8 +311,8 @@ bool Dungeon::makeRoom(int x, int y, Direction dir, bool firstRoom ) //Raum gene
 }
 bool Dungeon::makeCorridor(int x, int y, Direction dir)
 {
-	static const int minCorridorLength = 3;
-	static const int maxCorridorLength = 6;
+	static const int minCorridorLength = 5;
+	static const int maxCorridorLength = 15;
 
 	Rect corridor;
 	corridor.x = x;
@@ -417,5 +436,34 @@ bool Dungeon::placeObject(char tile)
 	}
 
 	return false;
+}
+
+bool Dungeon::clustercheck(int x, int y, bool vertical)
+{
+	switch (vertical)
+	{
+	case true:
+		if (getTile(x - 1, y) == Corridor || getTile(x - 2, y) == Corridor || getTile(x - 3, y) == Corridor
+			|| getTile(x + 1, y) == Corridor || getTile(x + 2, y) == Corridor || getTile(x + 3, y) == Corridor) {
+			return false;
+		}
+		else if (getTile(x - 1, y) == Floor || getTile(x - 2, y) == Floor || getTile(x - 3, y) == Floor
+			|| getTile(x + 1, y) == Floor || getTile(x + 2, y) == Floor || getTile(x + 3, y) == Floor) {
+			return false;
+		}
+		break;
+	case false:
+		if (getTile(x, y - 1) == Corridor || getTile(x, y - 2) == Corridor || getTile(x, y - 3) == Corridor
+			|| getTile(x, y + 1) == Corridor || getTile(x, y + 2) == Corridor || getTile(x, y + 3) == Corridor) {
+			return false;
+		}else if(getTile(x, y - 1) == Floor || getTile(x, y - 2) == Floor || getTile(x, y - 3) == Floor
+			|| getTile(x, y + 1) == Floor || getTile(x, y + 2) == Floor || getTile(x, y + 3) == Floor) {
+			return false;
+		}
+		break;
+	default:
+		break;
+	}
+	return true;
 }
 

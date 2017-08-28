@@ -42,6 +42,8 @@ public:
 	bool isVisible;
 	bool dead = false;
 	bool attacks = false;
+	bool followsPlayer = false;
+	bool xpAwarded = false;
 	int timer = 0;
 	int strength;
 	sf::Vector2f movement;

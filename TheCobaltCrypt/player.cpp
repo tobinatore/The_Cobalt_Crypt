@@ -11,9 +11,10 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, 
 	this->health = baseHealth;
 	this->strength = baseStrength;
 	this->armor = maxArmor;
+	this->points = 0;
 
 	body.setSize(sf::Vector2f(19.0f, 32.0f));					//Spieler
-	body.setOrigin(9.5f, 20.0f);								//da sonst die Koordinaten des Spielers von der oberen linken Ecke gelesen werden würden,
+	body.setOrigin(9.5f, 17.0f);								//da sonst die Koordinaten des Spielers von der oberen linken Ecke gelesen werden würden,
 																//Mittelpunkt festlegen
 	body.setTexture(texture);									//... und Textur verwenden
 
@@ -41,6 +42,18 @@ void Player::pickup(int item) {
 		break;
 	case 2:
 		armor += 5;
+
+		if (armor > maxArmor)
+			armor = maxArmor;
+		break;
+	case 3:
+		health += 25;
+
+		if (health > maxHealth)
+			health = maxHealth;
+		break;
+	case 4:
+		armor += 10;
 
 		if (armor > maxArmor)
 			armor = maxArmor;

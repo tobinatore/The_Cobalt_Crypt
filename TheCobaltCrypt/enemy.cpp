@@ -100,7 +100,9 @@ void Enemy::Update(float deltaTime, sf::Vector2f playerCoords)
 		counter++;
 		if (counter >= 50)
 		{
-			direction = rand() % 4 + 1;
+			if(!followsPlayer)
+				direction = rand() % 4 + 1;
+			
 			counter = 0;
 		}
 	}

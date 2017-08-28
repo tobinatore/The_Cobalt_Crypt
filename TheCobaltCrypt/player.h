@@ -5,7 +5,7 @@
 class Player
 {
 public:
-	int points;
+	int points = 0;
 	bool attacks = false;
 	int maxHealth = 100;
 	int maxArmor = 100;

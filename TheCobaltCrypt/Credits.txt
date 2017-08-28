@@ -2,9 +2,11 @@ warrior spritesheet: calciumtrice
 Musik: JRPG OST Rev2 von Avgvst
 Rüstungsicon: Scrittl
 
+Rahmen im Shop: Flatlander
+
 Wand-, Boden-, Spawn,- Ausgangs-, Heiltranktexturen: Public Domain (hier zu finden: 
 http://opengameart.org/content/dungeon-crawl-32x32-tiles)
 
 Monstertextur: Hyptosis (Spritesheet von mir)
 
-Hauptmenü / Game Over: von mir
+Hauptmenü / Game Over / Shop: von mir

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdio.h>      
 #include <stdlib.h>
+#include <string>
 #include <random>
 #include "dungeon_generator.h"
 #include "player.h"
@@ -12,15 +13,16 @@
 const int MAIN_MENU = 0;
 const int GAME = 1;
 const int GAME_OVER = 3;
-const int BLUE = 3;
-const int YELLOW = 4;
+const int SHOP = 4;
+const int BLUE = 5;
+const int YELLOW = 6;
 const int FRAMERATE = 60;
 const sf::Vector2f TEXTURE_SIZE = { 16.0f, 16.0f };							//Größe der verwendeten Texturen
 
-Dungeon d(256,144);		// Dungeon d(Breite des Fensters / Texturgröße, Höhe des Fensters / Texturgröße) -> 1280 / 16 && 736 / 16
+Dungeon d(256,144);		// Dungeon d(Breite des Fensters / Texturgröße, Höhe des Fensters / Texturgröße) -> 4096 / 16 & 2304 / 16
 
 std::vector<std::pair<sf::RectangleShape, bool> > groundTiles;	//Vektor zum Organisieren der Bodenkacheln, sowie deren Sichtbarkeit
-std::vector<std::pair<sf::RectangleShape, bool> > wallTiles;    //Vektor zum Organisieren der Wandkacheln, sowie deren Sichtbarkeit
+std::vector<std::pair<sf::RectangleShape, bool> > wallTiles;    
 std::vector<std::pair<sf::RectangleShape, bool> > decorationTiles;
 std::vector<std::pair<sf::RectangleShape, bool> > healthTiles;
 std::vector<std::pair<sf::RectangleShape, bool> > armorTiles;
@@ -30,13 +32,14 @@ int rooms;
 int blueDur = 15;
 int misc = BLUE;
 int attackTimer = 0;
-int switchViews = 0;
+int textDur = 120;
 
 std::vector<std::vector<int> > map;												//Array um festzustellen, wo welche Bodenkachel liegt
-std::vector<std::vector<int> > mapWalls;										//Array um festzustellen, wo welche Wandkachel liegt
+std::vector<std::vector<int> > mapWalls;										
 std::vector<std::vector<int> > mapDecorations;
 std::vector<std::vector<int> > mapHealthPickups;
 std::vector<std::vector<int> > mapArmorPickups;
+std::vector<std::vector<int> > pathmap;
 
 sf::Texture main_menu[2];
 sf::Texture game_over[2];
@@ -51,14 +54,13 @@ sf::Sprite healthContent;
 sf::Sprite armorFront;
 sf::Sprite armorBack;
 sf::Sprite armorContent;
+sf::Sprite shopArmor;
+sf::Sprite shopHeal;
 
 sf::Texture wallTextures[6];									//Wandtextur
 sf::Texture groundTextures[6];									//Bodentextur
 sf::Texture decorations[34];
 sf::Texture monsters[6];
-
-sf::FloatRect visibleArea(0, 0, 0, 0);
-
 sf::Texture t_healthBack;
 sf::Texture t_healthFront;
 sf::Texture t_healthContent;
@@ -69,8 +71,6 @@ sf::Texture t_armorContent;
 sf::Texture t_armorPickup;
 
 sf::View view1(sf::FloatRect(0.0f, 0.0f, 1280.0f, 720.0f));
-
-sf::FloatRect normalSize(0.0f, 0.0f, 4096.0f, 2304.0f);
 
 sf::RectangleShape spawnpoint(sf::Vector2f(16.0f, 16.0f));		//Rechteck, welches den Spawnpunkt markiert. Immer sichtbar
 
@@ -91,10 +91,68 @@ sf::Sound s_armor;
 sf::Sound s_hit;
 sf::Sound s_hitUnarmored;
 
-sf::Vector2f dimensions;
+sf::Text gold;
+sf::Text insufficientFunds;
 
+bool showText = false;
+
+void updatePathmap(Player player){
+	for (int x = player.getPosition().x - 48; x < player.getPosition().x + 48; x++)
+	{
+		for (int y = player.getPosition().y - 48; y < player.getPosition().y + 48; y++)
+		{
+			if (map[x][y] >= 0 || mapDecorations[x][y] >= 0 || mapHealthPickups[x][y] >= 0 || mapArmorPickups[x][y] >= 0) 
+			{
+				if (player.getPosition().x > x+16)
+				{
+					if(mapWalls[x+16][y] == -1)
+						pathmap[x][y] = 4;	//Ost
+					else if(mapWalls[x + 16][y] != -1 && mapWalls[x][y + 16] != -1)
+						pathmap[x][y] = 1;	//Nord
+					else if (mapWalls[x + 16][y] != -1 && mapWalls[x][y - 16] != -1)
+						pathmap[x][y] = 2;	//Süd
+				}
+				else if (player.getPosition().x < x-16)
+				{
+					if (mapWalls[x - 16][y] == -1)
+						pathmap[x][y] = 3;	//West
+					else if (mapWalls[x - 16][y] != -1 && mapWalls[x][y + 16] != -1)
+						pathmap[x][y] = 1;	//Nord
+					else if (mapWalls[x + 16][y] != -1 && mapWalls[x][y - 16] != -1)
+						pathmap[x][y] = 2;	//Süd
+				}
+				else if (player.getPosition().y > y)
+				{
+					if (mapWalls[x][y + 16] == -1)
+						pathmap[x][y] = 2;	//Süd
+					else if (mapWalls[x][y + 16] != -1 && mapWalls[x - 16][y] != -1)
+						pathmap[x][y] = 4;	//Ost
+					else if (mapWalls[x][y] != -1 && mapWalls[x+ 16][y] != -1)
+						pathmap[x][y] = 3;	//West
+				}
+				else if (player.getPosition().y < y)
+				{
+					if (mapWalls[x][y-16] == -1)
+						pathmap[x][y] = 1;	//Nord
+					else if (mapWalls[x][y-16] != -1 && mapWalls[x - 16][y] != -1)
+						pathmap[x][y] = 4;	//Ost
+					else if (mapWalls[x][y -16] != -1 && mapWalls[x + 16][y] != -1)
+						pathmap[x][y] = 3;	//West
+				}
+			}
+		}
+	}
+
+}
 
 void resetTextures() {
+
+	for (int i = 0; i < 6; i++)
+	{
+
+		groundTextures[i].loadFromFile("images/floor_var" + std::to_string(i + 1) + ".png");
+	}
+
 
 	map.clear();						//die Vektoren "leeren"
 	mapWalls.clear();
@@ -138,7 +196,7 @@ void resetTextures() {
 	}
 
 	for (int l = 0; l < div(rooms,5).quot; l++) {
-		Enemy x(&monsters[rnd(eng)], sf::Vector2u(5, 4), 0.2f, 100.0f, 110, 10);
+		Enemy x(&monsters[rnd(eng)], sf::Vector2u(5, 4), 0.2f, 110.0f, 110, 10);
 		enemies.push_back(x);
 		enemies[l].isVisible = false;
 	}
@@ -265,7 +323,6 @@ int processMainMenu(sf::RenderWindow& window) {
 
 }
 
-
 int processGameOver(sf::RenderWindow& window) {
 	view1.setCenter(640.0f, 360.0f);
 	if (misc == BLUE)
@@ -299,6 +356,24 @@ int processGameOver(sf::RenderWindow& window) {
 
 
 	return GAME_OVER;
+
+}
+
+int processShop(sf::RenderWindow& window) {
+	view1.setCenter(640.0f, 360.0f);
+	
+	shopHeal.setPosition(100.0f, 110.0f);
+	shopArmor.setPosition(750.0f, 110.0f);
+
+	window.draw(shopArmor);
+	window.draw(shopHeal);
+
+	if (showText)
+		window.draw(insufficientFunds);
+
+	window.display();
+
+	return SHOP;
 
 }
 
@@ -423,9 +498,6 @@ void showDungeon() {
 
 }
 
-
-
-
 int main() {
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "The Cobalt Crypt");	//Spielfenster anlegen
@@ -438,12 +510,14 @@ int main() {
 
 	std::cout << "Lade Texturen..." << std::endl;
 	
+	sf::Font font;
+	font.loadFromFile("Pixel Musketeer.otf");
+
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("images/warrior.png");
 
 	Player player(&playerTexture, sf::Vector2u(10, 10), 0.1f, 100.0f,100, 20,0);
 
-	
 	sf::Texture bg;
 	bg.loadFromFile("images/Main Menu.png");
 	mmBackground.setTexture(bg);
@@ -451,6 +525,19 @@ int main() {
 	sf::Texture gameOverBg;
 	gameOverBg.loadFromFile("images/GameOver.png");
 	goBackground.setTexture(gameOverBg);
+
+	sf::Texture shopBg;
+	shopBg.loadFromFile("images/shop.png");
+	sf::Sprite sBackground;
+	sBackground.setTexture(shopBg);
+
+	sf::Texture t_shopHeal;
+	t_shopHeal.loadFromFile("images/shop_heal.png");
+	shopHeal.setTexture(t_shopHeal);
+
+	sf::Texture t_shopArmor;
+	t_shopArmor.loadFromFile("images/shop_armor.png");
+	shopArmor.setTexture(t_shopArmor);
 
 
 	for (int i = 0; i < 2; i++)
@@ -545,19 +632,32 @@ int main() {
 	bool gameOverPlaying = false;
 	bool checkedOnce = true;
 	bool moving = false;
+	bool updatePaths = true;
+	
 
 	sf::Vector2f oldPos;
 
-	dimensions.x = 1280.0f;
-	dimensions.y = 720.0f;
-
 	int distanceToPlayerX;
 	int distanceToPlayerY;
+
+	gold.setFont(font);
+	gold.setString("Gold: " + std::to_string(player.points));
+	gold.setCharacterSize(24);
+	sf::FloatRect bounds = gold.getLocalBounds();
+	gold.setPosition(0, 65);
+
+	
+	insufficientFunds.setFont(font);
+	insufficientFunds.setString("Nicht genügend Gold!");
+	insufficientFunds.setCharacterSize(48);
+	insufficientFunds.setPosition(360.0f, 650.0f);
+
+
 //________________________SPIELBEGINN___________________________
 
 	while (window.isOpen())			//während das Fenster geöffnet ist
 	{
-			window.setView(view1);
+		window.setView(view1);
 
 		deltaTime = clock.restart().asSeconds();
 
@@ -572,7 +672,6 @@ int main() {
 			view1.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
 			window.draw(mmBackground);
 			gameState = processMainMenu(window);
-			
 			checkedOnce = true;
 			break;
 		case GAME_OVER:
@@ -582,6 +681,12 @@ int main() {
 			view1.setSize(1280.0f, 720.0f);
 			view1.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
 			gameState = processGameOver(window);
+		case SHOP:
+			window.setView(view1);
+			window.draw(sBackground);
+			view1.setSize(1280.0f, 720.0f);
+			view1.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 1.0f));
+			gameState = processShop(window);
 		}
 
 
@@ -596,14 +701,50 @@ int main() {
 			case sf::Event::Resized:	//Wenn man die Größe des Fensters ändert
 				std::cout << "Neue Breite: " << evnt.size.width << std::endl;	//Neue Höhe und Breite ausgeben
 				std::cout << "Neue Hoehe: " << evnt.size.height << std::endl;
-				dimensions.x = evnt.size.width;
-				dimensions.y = evnt.size.height;
+				view1.setSize(evnt.size.width, evnt.size.height);
+				window.setView(sf::View(view1));
 				break;
 			case sf::Event::MouseButtonPressed:
-				// Mouse button is pressed, get the position and set moving as active
-				if (evnt.mouseButton.button == 0) {
-					moving = true;
-					oldPos = window.mapPixelToCoords(sf::Vector2i(evnt.mouseButton.x, evnt.mouseButton.y));
+				if (gameState == GAME) {
+					// Mouse button is pressed, get the position and set moving as active
+					if (evnt.mouseButton.button == 0) {
+						moving = true;
+						oldPos = window.mapPixelToCoords(sf::Vector2i(evnt.mouseButton.x, evnt.mouseButton.y));
+					}
+				}
+				else if(gameState == SHOP)
+				{
+					if (evnt.mouseButton.button == 0) {
+						
+						sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
+						sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
+						sf::Vector2f converted = window.mapPixelToCoords(pixelPos);
+						
+						if (shopHeal.getGlobalBounds().contains(converted)) {
+							if (player.points >= 100) {
+								player.pickup(3);
+								player.points -= 100;
+								s_heal.play();
+							}
+							else
+							{
+								showText = true;
+								textDur = 120;
+							}
+						}
+						if (shopArmor.getGlobalBounds().contains(converted)) {
+							if (player.points >= 50) {
+								player.pickup(4);
+								player.points -= 50;
+								s_armor.play();
+							}
+							else
+							{
+								showText = true;
+								textDur = 120;
+							}
+						}
+					}
 				}
 				break;
 			case  sf::Event::MouseButtonReleased:
@@ -664,9 +805,16 @@ int main() {
 						playing = true;
 					}
 				}
-				if (evnt.key.code == sf::Keyboard::Subtract)
+				if (evnt.key.code == sf::Keyboard::Tab)
 				{
-					player.takeDamage(10);
+					if (gameState == GAME)
+					{
+						gameState = SHOP;
+					}
+					else
+					{
+						gameState = GAME;
+					}
 				}
 
 			case sf::Event::MouseWheelScrolled:
@@ -681,10 +829,14 @@ int main() {
 			
 		}
 
+		textDur--;
+
+		if (textDur == 0)
+			showText = false;
 	
+		gold.setString("Gold: " + std::to_string(player.points));
 		if (gameState == GAME) {
 
-		//	view1.setSize(dimensions);
 			menuPlaying = false;
 
 			if (checkedOnce)
@@ -697,17 +849,18 @@ int main() {
 				player.resurrect();
 				
 				
-
+				pathmap.clear();
 				map.clear();
 				mapWalls.clear();
 				mapDecorations.clear();
 				mapHealthPickups.clear();
 				mapArmorPickups.clear();
 
-				std::vector<int> row(2304, 0);
+				std::vector<int> row(2304, -1);
 
 				for (int i = 0; i < 4096; i++)
 				{
+					pathmap.push_back(row);
 					map.push_back(row);
 					mapWalls.push_back(row);
 					mapDecorations.push_back(row);
@@ -728,7 +881,7 @@ int main() {
 
 				for (int l = 0; l < enemies.size(); l++)
 				{
-					while (map[posX][posY] == 0)
+					while (map[posX][posY] == -1)
 					{
 						posX = rand() % 4096;
 						posY = rand() % 2304;
@@ -763,7 +916,6 @@ int main() {
 				{
 					player.movePlayer(sf::Vector2f(-100 * deltaTime, 0.0f));	//ist es keine Wand -> Spieler bewegen
 					view1.setCenter(player.getPosition());
-
 				}		
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { //s.o. (für "D")
@@ -771,7 +923,6 @@ int main() {
 				{
 					player.movePlayer(sf::Vector2f(100 * deltaTime, 0.0f));
 					view1.setCenter(player.getPosition());
-
 				}
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) { //s.o. (für "W")
@@ -779,7 +930,6 @@ int main() {
 				{
 					player.movePlayer(sf::Vector2f(0.0f, -100 * deltaTime)); 
 					view1.setCenter(player.getPosition());
-
 				}
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {  //s.o. (für "S")
@@ -787,50 +937,149 @@ int main() {
 				{
 					player.movePlayer(sf::Vector2f(0.0f, 100 * deltaTime));
 					view1.setCenter(player.getPosition());
-
 				}
 			}
 
+//_____________________________________Boden-Tiles____aufdecken_______________________________________________________________________________
+			if(map[(int)player.getPosition().x][(int)player.getPosition().y]>= 0)
+				groundTiles[map[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;			//nebenbei Boden-...
 			
-			groundTiles[map[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;			//nebenbei Boden-...
-			groundTiles[map[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
-			groundTiles[map[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
-			groundTiles[map[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
-			groundTiles[map[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
-			groundTiles[map[(int)player.getPosition().x + 16][(int)player.getPosition().y -16]].second = true;			//nebenbei Boden-...
-			groundTiles[map[(int)player.getPosition().x + 16][(int)player.getPosition().y +16]].second = true;
-			groundTiles[map[(int)player.getPosition().x - 16][(int)player.getPosition().y -16]].second = true;
-			groundTiles[map[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16]].second = true;
+			if (map[(int)player.getPosition().x + 16][(int)player.getPosition().y] >= 0)
+				groundTiles[map[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
 
+			if (map[(int)player.getPosition().x - 16][(int)player.getPosition().y] >= 0)
+				groundTiles[map[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
 
-			wallTiles[mapWalls[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;		//...und Wandfelder aufdecken und sichtbar machen
-			wallTiles[mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
-			wallTiles[mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
-			wallTiles[mapWalls[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
-			wallTiles[mapWalls[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
-			wallTiles[mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y - 16]].second = true;			
-			wallTiles[mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16]].second = true;
-			wallTiles[mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16]].second = true;
-			wallTiles[mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16]].second = true;
+			if (map[(int)player.getPosition().x][(int)player.getPosition().y + 16] >= 0)
+				groundTiles[map[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
 
+			if (map[(int)player.getPosition().x][(int)player.getPosition().y - 16] >= 0)
+				groundTiles[map[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
 
-			decorationTiles[mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;
-			decorationTiles[mapDecorations[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
-			decorationTiles[mapDecorations[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
-			decorationTiles[mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
-			decorationTiles[mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
+			if (map[(int)player.getPosition().x + 16][(int)player.getPosition().y - 16] >= 0)
+				groundTiles[map[(int)player.getPosition().x + 16][(int)player.getPosition().y -16]].second = true;
+
+			if (map[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16] >= 0)
+				groundTiles[map[(int)player.getPosition().x + 16][(int)player.getPosition().y +16]].second = true;
+
+			if (map[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16] >= 0)
+				groundTiles[map[(int)player.getPosition().x - 16][(int)player.getPosition().y -16]].second = true;
+
+			if (map[(int)player.getPosition().x-16][(int)player.getPosition().y + 16] >= 0)
+				groundTiles[map[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16]].second = true;
+
+//_____________________________________Wand-Tiles____aufdecken_______________________________________________________________________________			
+			if (mapWalls[(int)player.getPosition().x][(int)player.getPosition().y] >= 0)
+				wallTiles[mapWalls[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;		//...und Wandfelder aufdecken und sichtbar machen
 			
-			healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;
-			healthTiles[mapHealthPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
-			healthTiles[mapHealthPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
-			healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
-			healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
+			if (mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y] >= 0)
+				wallTiles[mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
+			
+			if (mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y] >= 0)
+				wallTiles[mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
+			
+			if (mapWalls[(int)player.getPosition().x][(int)player.getPosition().y + 16] >= 0)
+				wallTiles[mapWalls[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
+			
+			if (mapWalls[(int)player.getPosition().x][(int)player.getPosition().y- 16] >= 0)
+				wallTiles[mapWalls[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
+			
+			if (mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y - 16] >= 0)
+				wallTiles[mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y - 16]].second = true;			
+			
+			if (mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16] >= 0)
+				wallTiles[mapWalls[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16]].second = true;
+			
+			if (mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16] >= 0)
+				wallTiles[mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16]].second = true;
+			
+			if (mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16] >= 0)
+				wallTiles[mapWalls[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16]].second = true;
 
-			armorTiles[mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;
-			armorTiles[mapArmorPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
-			armorTiles[mapArmorPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
-			armorTiles[mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
-			armorTiles[mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
+//_____________________________________Deko-Tiles____aufdecken_______________________________________________________________________________
+			if (mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y] >= 0)
+				decorationTiles[mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;
+			
+			if (mapDecorations[(int)player.getPosition().x + 16][(int)player.getPosition().y] >= 0)
+				decorationTiles[mapDecorations[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
+			
+			if (mapDecorations[(int)player.getPosition().x - 16][(int)player.getPosition().y] >= 0)
+				decorationTiles[mapDecorations[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
+			
+			if (mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y + 16] >= 0)
+				decorationTiles[mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
+			
+			if (mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y - 16] >= 0)
+				decorationTiles[mapDecorations[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
+
+			if (mapDecorations[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16] >= 0)
+				decorationTiles[mapDecorations[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16]].second = true;
+			
+			if (mapDecorations[(int)player.getPosition().x + 16][(int)player.getPosition().y - 16] >= 0)
+				decorationTiles[mapDecorations[(int)player.getPosition().x +16][(int)player.getPosition().y - 16]].second = true;
+			
+			if (mapDecorations[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16] >= 0)
+				decorationTiles[mapDecorations[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16]].second = true;
+		
+			if (mapDecorations[(int)player.getPosition().x + 16][(int)player.getPosition().y +16] >= 0)
+				decorationTiles[mapDecorations[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16]].second = true;
+			
+//_____________________________________Gesundheits-Tiles____aufdecken_______________________________________________________________________________			
+			if (mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y] >= 0)
+				healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;
+			
+			if (mapHealthPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y] >= 0)
+				healthTiles[mapHealthPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
+			
+			if (mapHealthPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y] >= 0)
+				healthTiles[mapHealthPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
+			
+			if (mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y + 16] >= 0)
+				healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
+			
+			if (mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y - 16] >= 0)
+				healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
+
+			if (mapHealthPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16] >= 0)
+				healthTiles[mapHealthPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16]].second = true;
+
+			if (mapHealthPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y - 16] >= 0)
+				healthTiles[mapHealthPickups[(int)player.getPosition().x +16][(int)player.getPosition().y - 16]].second = true;
+
+			if (mapHealthPickups[(int)player.getPosition().x -16][(int)player.getPosition().y + 16] >= 0)
+				healthTiles[mapHealthPickups[(int)player.getPosition().x -16][(int)player.getPosition().y + 16]].second = true;
+
+			if (mapHealthPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16] >= 0)
+				healthTiles[mapHealthPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16]].second = true;
+
+//_____________________________________Rüstungs-Tiles____aufdecken_______________________________________________________________________________
+			if (mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y] >= 0)
+				armorTiles[mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y]].second = true;
+			
+			if (mapArmorPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y] >= 0)
+				armorTiles[mapArmorPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y]].second = true;
+			
+			if (mapArmorPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y] >= 0)
+				armorTiles[mapArmorPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y]].second = true;
+			
+			if (mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y + 16] >= 0)
+				armorTiles[mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y + 16]].second = true;
+				
+			if (mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y - 16] >= 0)
+				armorTiles[mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y - 16]].second = true;
+
+			if (mapArmorPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16] >= 0)
+				armorTiles[mapArmorPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y - 16]].second = true;
+
+			if (mapArmorPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y - 16] >= 0)
+				armorTiles[mapArmorPickups[(int)player.getPosition().x +16][(int)player.getPosition().y - 16]].second = true;
+
+			if (mapArmorPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16] >= 0)
+				armorTiles[mapArmorPickups[(int)player.getPosition().x - 16][(int)player.getPosition().y + 16]].second = true;
+
+			if (mapArmorPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16] >= 0)
+				armorTiles[mapArmorPickups[(int)player.getPosition().x + 16][(int)player.getPosition().y + 16]].second = true;
+
 
 			/*Extra if-Verwzeigung, da der Ausgang in keinem Vector gespeichert ist und extra sichtbar gemacht werden muss*/
 			if (d.getTile((player.getPosition().x + 16) / 16, (player.getPosition().y) / 16) == '7'
@@ -845,41 +1094,62 @@ int main() {
 				trapdoor.second = true;
 			}
 				
+
+//_________________________________Hebt_der_Spieler_ein_Powerup_auf________________________________
 			if (d.getTile(player.getPosition().x / 16, (player.getPosition().y) / 16) == '5' 
-				&& healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y]].first.getTexture() != &groundTextures[4]) {
-				player.pickup(1);
-				s_heal.play();
-				healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y]].first.setTexture(&groundTextures[4]);
+				&& healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y]].first.getTexture() != &groundTextures[4]) 
+			{
+				player.pickup(1);		//Spieler hebt Gesundheits-Pickup auf
+				s_heal.play();			// Heal-Sound spielen
+				healthTiles[mapHealthPickups[(int)player.getPosition().x][(int)player.getPosition().y]].first.setTexture(&groundTextures[4]); //Pickup durch normalen Boden ersetzen
 			}
 			else if (d.getTile(player.getPosition().x / 16, (player.getPosition().y) / 16) == '8'
 				&& armorTiles[mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y]].first.getTexture() != &groundTextures[4])
 			{
-				player.pickup(2);
-				s_armor.play();
-				armorTiles[mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y]].first.setTexture(&groundTextures[4]);
+				player.pickup(2);	// Spieler hebt Rüstung auf
+				s_armor.play();		// Rüstungs_sound spielen
+				armorTiles[mapArmorPickups[(int)player.getPosition().x][(int)player.getPosition().y]].first.setTexture(&groundTextures[4]);//Pickup durch normalen Boden ersetzen
 			}
 
-			sf::Vector2f movement(0.0f, 0.0f);
-
+			sf::Vector2f movement(0.0f, 0.0f); //Bewegungsvektor der Monster
 			
-
 			for (int i = 0; i < enemies.size(); i++) {
 				
-				distanceToPlayerX = player.getPosition().x - enemies[i].getPosition().x;
-				distanceToPlayerY = player.getPosition().y - enemies[i].getPosition().y;
+				distanceToPlayerX = player.getPosition().x - enemies[i].getPosition().x;	//Entfernung zum Spieler in x-Richtung
+				distanceToPlayerY = player.getPosition().y - enemies[i].getPosition().y;	//Entfernung zum Spieler in y-Richtung
 				enemies[i].movement = movement;
 
-				if ((distanceToPlayerX > -65 && distanceToPlayerX < 65) && (distanceToPlayerY > -65 && distanceToPlayerY < 65)) {
+				if ((distanceToPlayerX > - 48 && distanceToPlayerX < 48) && (distanceToPlayerY > -48 && distanceToPlayerY < 48)) //Bei bestimmter Entfernung zum Spieler Verfolgung beginnen
+				{ 
 					std::cout << "Gegner " << i << " jagt Spieler" << std::endl;
+					enemies[i].followsPlayer = true;
+					
+					if (updatePaths)
+					{
+						updatePathmap(player);
+						updatePaths = false;
+					}
+
+					enemies[i].direction = pathmap[enemies[i].getPosition().x][enemies[i].getPosition().y];
+
 				}
 				else
 				{
+					enemies[i].followsPlayer = false;
+				}
+				
+				if (i == enemies.size() - 1)
+					updatePaths = true;
+
+
 					if (enemies[i].direction == 1)
 					{
-						if (d.getTile(enemies[i].getPosition().x / 16, (enemies[i].getPosition().y / 16) == '1'
+						if (d.getTile(enemies[i].getPosition().x / 16, (enemies[i].getPosition().y / 16)) == '1'
 							|| d.getTile(enemies[i].getPosition().x / 16, enemies[i].getPosition().y / 16) == '6'
 							|| d.getTile(enemies[i].getPosition().x / 16, enemies[i].getPosition().y / 16) == '7'
-							|| d.getTile(enemies[i].getPosition().x / 16, enemies[i].getPosition().y / 16)) == '4')
+							|| d.getTile(enemies[i].getPosition().x / 16, enemies[i].getPosition().y / 16) == '4'
+							|| d.getTile(enemies[i].getPosition().x / 16, enemies[i].getPosition().y / 16) == '5'
+							|| d.getTile(enemies[i].getPosition().x / 16, enemies[i].getPosition().y / 16) == '8')
 						{
 							enemies[i].movement.y -= 100 * deltaTime;
 						}
@@ -916,29 +1186,30 @@ int main() {
 					}
 					else
 					{
-						//Nicht bewegen
+						//...oder nicht bewegen
 					}
+
+				if (map[(int)enemies[i].getPosition().x][(int)enemies[i].getPosition().y] >= 0) {
+					if (groundTiles[map[(int)enemies[i].getPosition().x][(int)enemies[i].getPosition().y]].second && !enemies[i].dead)	//wenn das Monster auf einem bereits aufgedeckten Feld steht..
+						enemies[i].isVisible = true;	//..sichtbar machen
+					else
+						enemies[i].isVisible = false;	//ansonsten nicht sichtbar
 				}
 
-				if (groundTiles[map[(int)enemies[i].getPosition().x][(int)enemies[i].getPosition().y]].second && !enemies[i].dead)
-					enemies[i].isVisible = true;
-				else
+				if ((distanceToPlayerX > -16 && distanceToPlayerX < 16) && (distanceToPlayerY > -16 && distanceToPlayerY < 16))	//bei geringen Abstand zum Spieler
 				{
-					enemies[i].isVisible = false;
-				}
-
-				if ((distanceToPlayerX > -25 && distanceToPlayerX < 25) && (distanceToPlayerY > -25 && distanceToPlayerY < 25))
-				{
-					if (!enemies[i].dead) {
-						enemies[i].attacks = true;
+					if (!enemies[i].dead) //und noch lebendem Monster
+					{	
+						enemies[i].attacks = true;	//Spieler angreifen
 						attackTimer++;
-						if (attackTimer == 62) {
-							player.takeDamage(enemies[i].dealDamage(enemies[i].strength));
+						if (attackTimer == 62) 
+						{
+							player.takeDamage(enemies[i].dealDamage(enemies[i].strength));	// wenn die Animation beim Angriff angekommen ist Schaden austeilen
 							
 							if (player.getArmor() <= 0)
-								s_hitUnarmored.play();
+								s_hitUnarmored.play();	//Wenn Spieler ungepanzert ist -> schreien
 							else
-								s_hit.play();
+								s_hit.play();		// Wenn Spieler gepanzert ist -> Schlag auf Rüstung
 							
 							attackTimer = 0;
 						}
@@ -948,26 +1219,32 @@ int main() {
 						enemies[i].isVisible = false;
 					}
 				}
+
+				if (enemies[i].dead && enemies[i].xpAwarded == false) {
+					player.points += 20;
+					enemies[i].xpAwarded = true;
+					gold.setString("Gold: " + std::to_string(player.points));
+				}
 			}
 
 
 			if (player.attacks) {
 				for (int i = 0; i < enemies.size(); i++)
 				{
-					if (map[(int)player.getPosition().x + 16][(int)player.getPosition().y] == map[(int)enemies[i].getPosition().x][(int)enemies[i].getPosition().y]
-						|| map[(int)player.getPosition().x - 16][(int)player.getPosition().y] == map[(int)enemies[i].getPosition().x][(int)enemies[i].getPosition().y]
-						|| map[(int)player.getPosition().x][(int)player.getPosition().y + 16] == map[(int)enemies[i].getPosition().x][(int)enemies[i].getPosition().y]
-						|| map[(int)player.getPosition().x][(int)player.getPosition().y - 16] == map[(int)enemies[i].getPosition().x][(int)enemies[i].getPosition().y])
+					if ((player.getPosition().x - enemies[i].getPosition().x > -16 && player.getPosition().x - enemies[i].getPosition().x < 16)		//Spieler hat eine Angriffsreichweite von genau einem Tile
+						&& (player.getPosition().y - enemies[i].getPosition().y > -16 && player.getPosition().y - enemies[i].getPosition().y < 16))
 					{
 						enemies[i].takeDamage(player.dealDamage());
 					}
 				}
 			}
 		
-			healthContent.setScale(player.getHealth() * 1.5f / player.maxHealth, 1.5f);
-			healthContent.setPosition(21 + ((player.getHealth() * 1.5f / player.maxHealth) * (-6.6667f) + 11), 16.5f);
+			healthContent.setScale(player.getHealth() * 1.5f / player.maxHealth, 1.5f);		//Größe der Lebensleiste an momentane Lebenspunkte anpassen
+			healthContent.setPosition(21 + ((player.getHealth() * 1.5f / player.maxHealth) * (-6.6667f) + 11), 16.5f);	//Lebensleiste platzieren (da die Scale verändert wird,
+																														//wird automatisch auch der Punkt an dem SFML die Leiste ausrichtet verschoben. 
+																														//Daher die komplexe Formel zur Positionsberechnung.)
 
-			armorContent.setScale(player.getArmor() * 1.5f / player.maxArmor, 1.5f);
+			armorContent.setScale(player.getArmor() * 1.5f / player.maxArmor, 1.5f);		//siehe oben, nur für die Rüstungsleiste
 			armorContent.setPosition(21 + ((player.getArmor() * 1.5f / player.maxArmor) * (-6.6667f) + 11), 46.5f);
 
 			
@@ -977,28 +1254,29 @@ int main() {
 				d.clearDungeon(256, 144);						//Dungeon löschen
 				generateDungeon();							//neuen Dungeon erzeugen
 
-				groundTiles.resize(d.countFloorTiles());	//die drei Vektoren auf die richtige Größe bringen
+				groundTiles.resize(d.countFloorTiles());	//die Vektoren auf die richtige Größe bringen
 				wallTiles.resize(d.countWallTiles());
 				decorationTiles.resize(d.countDecoTiles());
 				healthTiles.resize(d.countPickupTiles().first);
 				armorTiles.resize(d.countPickupTiles().second);
 				enemies.clear();
 				
-				resetTextures();
+				resetTextures();		//neue Texturen zuordnen
 
-				std::vector<int> row(2304, 0);
+				std::vector<int> row(2304, -1);
+
+				pathmap.clear();
 
 				for (int i = 0; i < 4096; i++)
 				{
-					map.push_back(row);
+					pathmap.push_back(row);
+					map.push_back(row);				//Die Maps initialisieren
 					mapWalls.push_back(row);
 					mapDecorations.push_back(row);
 					mapHealthPickups.push_back(row);
 					mapArmorPickups.push_back(row);
 				}
 
-
-				//prepareTextures();
 				showDungeon();			//Dungeon für SFML vorbereiten
 
 				player.SetPosition(sf::Vector2f(spawnChoords.first, spawnChoords.second));	//Spieler auf Spawnpunkt setzen
@@ -1006,9 +1284,9 @@ int main() {
 				int posX = rand() % 4096;
 				int posY = rand() % 2034;
 
-				for (int l = 0; l < enemies.size(); l++)
+				for (int l = 0; l < enemies.size(); l++)	//Für jeden Feind eine Position bestimmen
 				{
-					while (map[posX][posY] == 0)
+					while (map[posX][posY] == -1)
 					{
 						posX = rand() % 4096;
 						posY = rand() % 2304;
@@ -1017,81 +1295,83 @@ int main() {
 					enemies[l].SetPosition(sf::Vector2f(posX, posY));
 					posX = 0;
 					posY = 0;
-				}     
+				}  
+			
 			}
 
 			
 
-			if (player.dead) {
-				gameState = GAME_OVER;
-				ambient.stop();
-				gameOverMusic.play();
+			if (player.dead)	//wenn der Spieler stirbt:
+			{
+				gameState = GAME_OVER;	//Spiel ist GAME_OVER
+				ambient.stop();			//Hintergrundmusik stoppt
+				gameOverMusic.play();	//Musik des Game Over Bildschirms spielt
 			}
 
 			window.clear();		//Fenster leeren
 
-			player.Update(deltaTime);
+			player.Update(deltaTime);	//Spieler aktualisieren
 
 			for (int i = 0; i < enemies.size(); i++)
 			{
 				enemies[i].Update(deltaTime, player.getPosition());
 			}
 
-			if (switchViews == 0) {
 
-				for (int i = 0; i < groundTiles.size(); i++)
-				{
-					if (groundTiles[i].second)
-						window.draw(groundTiles[i].first);	//die bereits aufgedeckten Bodenkacheln zeichnen 
-				}
-
-				for (int j = 0; j < wallTiles.size(); j++)
-				{
-					if (wallTiles[j].second)				//die bereits aufgedeckten Wandkacheln zeichnen
-						window.draw(wallTiles[j].first);
-				}
-
-				for (int k = 0; k < decorationTiles.size(); k++)
-				{
-					if (decorationTiles[k].second)				//die bereits aufgedeckten Dekokacheln zeichnen
-						window.draw(decorationTiles[k].first);
-				}
-
-				for (int l = 0; l < healthTiles.size(); l++)
-				{
-					if (healthTiles[l].second)				//die bereits aufgedeckten Dekokacheln zeichnen
-						window.draw(healthTiles[l].first);
-				}
-
-				for (int m = 0; m < armorTiles.size(); m++)
-				{
-					if (armorTiles[m].second)				//die bereits aufgedeckten Dekokacheln zeichnen
-						window.draw(armorTiles[m].first);
-				}
-
-				if (trapdoor.second)						//falls der Ausgang aufgedeckt wurde, ihn auch zeichnen
-					window.draw(trapdoor.first);
-
-				for (int i = 0; i < enemies.size(); i++)
-				{
-					if (enemies[i].isVisible)
-						enemies[i].Draw(window);
-				}
-
-				window.draw(spawnpoint);				//Spawnpunkt zeichnen
-				player.Draw(window);					//Spieler zeichnen
+			for (int i = 0; i < groundTiles.size(); i++)
+			{
+				if (groundTiles[i].second)
+					window.draw(groundTiles[i].first);	//die bereits aufgedeckten Bodenkacheln zeichnen 
 			}
+
+			for (int j = 0; j < wallTiles.size(); j++)
+			{
+				if (wallTiles[j].second)				//die bereits aufgedeckten Wandkacheln zeichnen
+					window.draw(wallTiles[j].first);
+			}
+
+			for (int k = 0; k < decorationTiles.size(); k++)
+			{
+				if (decorationTiles[k].second)				//die bereits aufgedeckten Dekokacheln zeichnen
+					window.draw(decorationTiles[k].first);
+			}
+
+			for (int l = 0; l < healthTiles.size(); l++)
+			{
+				if (healthTiles[l].second)				//die bereits aufgedeckten Dekokacheln zeichnen
+					window.draw(healthTiles[l].first);
+			}
+
+			for (int m = 0; m < armorTiles.size(); m++)
+			{
+				if (armorTiles[m].second)				//die bereits aufgedeckten Dekokacheln zeichnen
+					window.draw(armorTiles[m].first);
+			}
+
+			if (trapdoor.second)						//falls der Ausgang aufgedeckt wurde, ihn auch zeichnen
+				window.draw(trapdoor.first);
+
+			for (int i = 0; i < enemies.size(); i++)
+			{
+				if (enemies[i].isVisible)
+					enemies[i].Draw(window);
+			}
+
+			window.draw(spawnpoint);				//Spawnpunkt zeichnen
+			player.Draw(window);					//Spieler zeichnen
 			
-			window.setView(window.getDefaultView());
-			window.draw(healthBack);
+			
+			
+			window.setView(window.getDefaultView());	//die View aufrufen, die so groß ist wie das Fenster
+			window.draw(healthBack);					//Lebensleiste zeichenen
 			window.draw(healthContent);
 			window.draw(healthFront);
-			
-			window.draw(armorBack);
-			window.draw(armorContent);
+							
+			window.draw(armorBack);						//Rüstungsleiste zeichnen
+			window.draw(armorContent);					
 			window.draw(armorFront);
+			window.draw(gold);
 
-			
 			window.display();						//Fenster anzeigen
 		}
 	}
